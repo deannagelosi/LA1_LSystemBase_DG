@@ -1,0 +1,5 @@
+# config files
+.vscode/
+
+# build files
+out/
