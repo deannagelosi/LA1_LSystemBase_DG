@@ -26,7 +26,7 @@ LSystem initSquare() {
 LSystem initBranching() {
   // initialize turtle variables
   float moveDist = 20;
-  float rotateAngle = 90;
+  float rotateAngle = 45;
   float scaleFactor = 1;
   
   // The intial axiom / input string
