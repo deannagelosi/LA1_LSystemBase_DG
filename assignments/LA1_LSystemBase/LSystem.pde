@@ -89,7 +89,7 @@ public class LSystem {
     // and append them them to the currentIterationBuffer
     String result = current.replace("F", this.rules.get('F'));
     currentIterationBuffer.append(result);
-    
+
      // Increment our iteration after we are done
      iterationNum += 1;
   }
@@ -111,22 +111,29 @@ public class LSystem {
     // Get the current iteration string
     String currentIteration = this.getIterationString(); 
     
-    // TODO: Loop through each character in the iteration string,
-    // and do turtle operations
-
+    // Loop through each character in the iteration string, and do turtle operations
     for (int i = 0; i < currentIteration.length(); i++) {
       Character c = currentIteration.charAt(i); 
-      // TODO: Imoplement turtle operations for different commands
+      // DONE: Implement turtle operations for different commands
       switch (c) {
         case 'F':
           t.forward(dist);
           break; // The "break" breaks out of the switch statement and prevents the next cases from running
-         case '+':
-           // TODO
-           break;
-         default:
-           // Throw an error if we don't have a draw operation implemented 
-           throw new IllegalArgumentException("Missing a drawing operation case for character: " + c.toString());  
+        case '+':
+          t.right(rotateAngle);
+          break;
+        case '-':
+          t.left(rotateAngle);
+          break;
+        case '[':
+          t.push();
+          break;
+        case ']':
+          t.pop();
+          break;
+        default:
+          // Throw an error if we don't have a draw operation implemented 
+          throw new IllegalArgumentException("Missing a drawing operation case for character: " + c.toString());  
        }
     }
   }
