@@ -85,12 +85,11 @@ public class LSystem {
     // Now clear the current iteration string: currentIterationBuffer
     this.clearCurrentStringBuffer();
     
-    // TODO: Implement the procedure for using the rules to replace characters in the current string, 
+    // DONE: Implement the procedure for using the rules to replace characters in the current string, 
     // and append them them to the currentIterationBuffer
- 
- 
- 
- 
+    String result = current.replace("F", this.rules.get('F'));
+    currentIterationBuffer.append(result);
+    
      // Increment our iteration after we are done
      iterationNum += 1;
   }
