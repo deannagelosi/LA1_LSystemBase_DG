@@ -26,7 +26,8 @@ void setup() {
   t = new Turtle(this);
   
   // Initialize an LSystem using a function from ExampleLSystems
-  lSys = initSquare();
+  // lSys = initSquare();
+  lSys = initBranching();
    
   // Don't loop the draw function
   noLoop();

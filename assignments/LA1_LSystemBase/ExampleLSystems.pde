@@ -21,4 +21,21 @@ LSystem initSquare() {
   return new LSystem(axiom, rules, moveDist, rotateAngle, scaleFactor);
 }
 
-// TODO: create your own L-System initialization functions
+// DONE: create your own L-System initialization functions
+// This function returns an initialized LSystem for a "Branching L-System"
+LSystem initBranching() {
+  // initialize turtle variables
+  float moveDist = 20;
+  float rotateAngle = 90;
+  float scaleFactor = 1;
+  
+  // The intial axiom / input string
+  String axiom = "F";
+  
+  // Create any production rules
+  HashMap<Character, String> rules = new HashMap<>();
+  rules.put('F', "F[-F][+F]");
+    
+  // Create the Lsystem
+  return new LSystem(axiom, rules, moveDist, rotateAngle, scaleFactor);
+}
