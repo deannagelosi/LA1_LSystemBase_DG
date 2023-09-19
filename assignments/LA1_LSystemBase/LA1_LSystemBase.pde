@@ -45,9 +45,11 @@ void draw() {
   
   // Reset the L-System's State
   lSys.reset();
-  
-  // TODO: Iterate (simulate) the LSystem for numIterations using its iterate() function
-  
+
+  // DONE: Iterate (simulate) the LSystem for numIterations using its iterate() function
+  for (int i = 0; i < numIterations; i++) {
+    lSys.iterate();
+  }
   
   // Draw the LSystem
   lSys.drawLSystem(t);
