@@ -18,7 +18,7 @@ Turtle t;
 
 void setup() {
   // set-up drawing
-  size(700, 700);
+  size(800, 800);
   background(255);
   stroke(0);
   
@@ -27,7 +27,10 @@ void setup() {
   
   // Initialize an LSystem using a function from ExampleLSystems
   // lSys = initSquare();
-  lSys = initBranching();
+  // lSys = initBranching();
+  // lSys = initNew();
+  // lSys = initNautral();
+  lSys = initFass();
    
   // Don't loop the draw function
   noLoop();
@@ -68,7 +71,7 @@ void resetTurtle() {
   t.clearTurtleHistory();
   
   // You can change the start position if the image doesn't fit.
-  t.goToPoint(width/2, height-20);
+  t.goToPoint(width/2, height/2);
   t.setHeading(0);
   t.penDown();
 }
