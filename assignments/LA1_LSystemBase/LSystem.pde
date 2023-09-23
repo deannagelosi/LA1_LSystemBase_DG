@@ -85,12 +85,12 @@ public class LSystem {
     // Now clear the current iteration string: currentIterationBuffer
     this.clearCurrentStringBuffer();
     
-    // TODO: Implement the procedure for using the rules to replace characters in the current string, 
+    // DONE: Implement the procedure for using the rules to replace characters in the current string, 
     // and append them them to the currentIterationBuffer
- 
- 
- 
- 
+    current = current.replace("F", this.rules.get('F'));
+    current = current.replace("X", this.rules.get('X'));
+    currentIterationBuffer.append(current);
+
      // Increment our iteration after we are done
      iterationNum += 1;
   }
@@ -112,22 +112,39 @@ public class LSystem {
     // Get the current iteration string
     String currentIteration = this.getIterationString(); 
     
-    // TODO: Loop through each character in the iteration string,
-    // and do turtle operations
-
+    // Loop through each character in the iteration string, and do turtle operations
+    int depth = 0; // Depth counter
     for (int i = 0; i < currentIteration.length(); i++) {
       Character c = currentIteration.charAt(i); 
-      // TODO: Imoplement turtle operations for different commands
+      // DONE: Implement turtle operations for different commands
       switch (c) {
         case 'F':
-          t.forward(dist);
+          // t.forward(dist);
+          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
           break; // The "break" breaks out of the switch statement and prevents the next cases from running
-         case '+':
-           // TODO
-           break;
-         default:
-           // Throw an error if we don't have a draw operation implemented 
-           throw new IllegalArgumentException("Missing a drawing operation case for character: " + c.toString());  
+        case '+':
+          t.right(rotateAngle);
+          break;
+        case '-':
+          t.left(rotateAngle);
+          break;
+        case '[':
+          t.push();
+          depth++; // Increment depth after open bracket
+          break;
+        case ']':
+          t.pop();
+          depth--; // Decrement depth after closing bracket
+          break;
+        case 'X':
+          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
+          break;
+        case 'Y':
+          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
+          break;
+        default:
+          // Throw an error if we don't have a draw operation implemented 
+          throw new IllegalArgumentException("Missing a drawing operation case for character: " + c.toString());  
        }
     }
   }

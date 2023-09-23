@@ -1,0 +1,7 @@
+# config files
+.vscode/
+
+# build files
+out/
+
+.DS_Store
