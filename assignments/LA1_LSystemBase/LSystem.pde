@@ -87,8 +87,25 @@ public class LSystem {
     
     // DONE: Implement the procedure for using the rules to replace characters in the current string, 
     // and append them them to the currentIterationBuffer
-    current = current.replace("F", this.rules.get('F'));
-    current = current.replace("X", this.rules.get('X'));
+    if (this.rules.containsKey('F')) {
+      current = current.replace("F", this.rules.get('F'));
+    }
+    if (this.rules.containsKey('X')) {
+      current = current.replace("X", this.rules.get('X'));
+    }
+    // this case is for a probabilistic L-system
+    if (this.rules.containsKey('D') && this.rules.containsKey('G') && this.rules.containsKey('H')) {
+      float P = random(1);
+      
+      if (P <= 0.33) {
+        current = current.replace("F", this.rules.get('D'));
+      } else if (0.33 < P && P <= 0.66) {
+        current = current.replace("F", this.rules.get('G'));
+      } else {
+        current = current.replace("F", this.rules.get('H'));
+      }
+    }
+
     currentIterationBuffer.append(current);
 
      // Increment our iteration after we are done
@@ -98,9 +115,14 @@ public class LSystem {
   // This function uses the turtle to draw based on each character in the LSystem's 
   // iteration string. It also handles scaling the moveDistance (to keep the image in frame), if desired
   public void drawLSystem(Turtle t) {
+    // if we have a probabilistic l-system
+    // boolean randPattern = false;
+    // if (this.rules.containsKey('D') && this.rules.containsKey('G') && this.rules.containsKey('H')) {
+    //   randPattern = true;
+    
     // Get the current iteration numbers
     int iterationNum = this.getIterationNum();
-    
+
     // Scale the move distance (if needed)
     float dist = this.moveDistance;
     
@@ -114,19 +136,24 @@ public class LSystem {
     
     // Loop through each character in the iteration string, and do turtle operations
     int depth = 0; // Depth counter
+    float randomMod = 1; // random modifier
+
     for (int i = 0; i < currentIteration.length(); i++) {
       Character c = currentIteration.charAt(i); 
       // DONE: Implement turtle operations for different commands
       switch (c) {
         case 'F':
           // t.forward(dist);
-          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
+          // if (randPattern == true) {
+          //   randomMod = random(1) + 0.5;
+          // }
+          t.forward(randomMod * (dist * (float)Math.pow(0.5, depth))); // Change move distance by depth
           break; // The "break" breaks out of the switch statement and prevents the next cases from running
         case '+':
-          t.right(rotateAngle);
+          t.right(rotateAngle * randomMod);
           break;
         case '-':
-          t.left(rotateAngle);
+          t.left(rotateAngle * randomMod);
           break;
         case '[':
           t.push();
