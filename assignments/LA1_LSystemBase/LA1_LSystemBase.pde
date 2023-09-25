@@ -29,8 +29,9 @@ void setup() {
   // lSys = initSquare();
   // lSys = initBranching();
   // lSys = initNew();
-  // lSys = initNautral();
-  lSys = initFass();
+  // lSys = initNatural();
+  // lSys = initFass();
+  lSys = initProbBranching();
    
   // Don't loop the draw function
   noLoop();
@@ -71,7 +72,7 @@ void resetTurtle() {
   t.clearTurtleHistory();
   
   // You can change the start position if the image doesn't fit.
-  t.goToPoint(width/2, height/2);
+  t.goToPoint(width/2, height - 100);
   t.setHeading(0);
   t.penDown();
 }
