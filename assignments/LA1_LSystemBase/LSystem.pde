@@ -85,29 +85,21 @@ public class LSystem {
     // Now clear the current iteration string: currentIterationBuffer
     this.clearCurrentStringBuffer();
     
-    // DONE: Implement the procedure for using the rules to replace characters in the current string, 
-    // and append them them to the currentIterationBuffer
-    if (this.rules.containsKey('F')) {
-      current = current.replace("F", this.rules.get('F'));
-    }
-    if (this.rules.containsKey('X')) {
-      current = current.replace("X", this.rules.get('X'));
-    }
-    // this case is for a probabilistic L-system
-    if (this.rules.containsKey('D') && this.rules.containsKey('G') && this.rules.containsKey('H')) {
-      float P = random(1);
-      
-      if (P <= 0.33) {
-        current = current.replace("F", this.rules.get('D'));
-      } else if (0.33 < P && P <= 0.66) {
-        current = current.replace("F", this.rules.get('G'));
+    // for each character in the current string 
+    // do a replace following the rules, or ignore if it is constant
+    for (int i = 0; i < current.length(); i++) {
+      // Get current character
+      Character c = current.charAt(i);
+
+      // If we have a rule for the character,
+      // apply it by appending to the iteration string
+      if (rules.containsKey(c)) {
+        currentIterationBuffer.append(rules.get(c));
       } else {
-        current = current.replace("F", this.rules.get('H'));
+        // if we don't have a rule, the rule is to use the same character
+        currentIterationBuffer.append(c);
       }
     }
-
-    currentIterationBuffer.append(current);
-
      // Increment our iteration after we are done
      iterationNum += 1;
   }
@@ -115,62 +107,67 @@ public class LSystem {
   // This function uses the turtle to draw based on each character in the LSystem's 
   // iteration string. It also handles scaling the moveDistance (to keep the image in frame), if desired
   public void drawLSystem(Turtle t) {
-    // if we have a probabilistic l-system
-    // boolean randPattern = false;
-    // if (this.rules.containsKey('D') && this.rules.containsKey('G') && this.rules.containsKey('H')) {
-    //   randPattern = true;
-    
     // Get the current iteration numbers
     int iterationNum = this.getIterationNum();
 
     // Scale the move distance (if needed)
-    float dist = this.moveDistance;
-    
-    // Helps keep the image in frame when it gets too big
-    if (scaleFactor != 1) {
-      dist = dist / (scaleFactor * (iterationNum + 1));
-    }
+    float dist = this.moveDistance / (scaleFactor * (iterationNum + 1));
 
     // Get the current iteration string
     String currentIteration = this.getIterationString(); 
-    
-    // Loop through each character in the iteration string, and do turtle operations
-    int depth = 0; // Depth counter
-    float randomMod = 1; // random modifier
 
+    // Loop through each character in the iteration string,
+    // and do turtle operations
     for (int i = 0; i < currentIteration.length(); i++) {
       Character c = currentIteration.charAt(i); 
-      // DONE: Implement turtle operations for different commands
       switch (c) {
         case 'F':
-          // t.forward(dist);
-          // if (randPattern == true) {
-          //   randomMod = random(1) + 0.5;
-          // }
-          t.forward(randomMod * (dist * (float)Math.pow(0.5, depth))); // Change move distance by depth
-          break; // The "break" breaks out of the switch statement and prevents the next cases from running
+          t.forward(dist); 
+          break;
+        case 'G':
+          t.forward(dist);
+          break;
+        case 'f':
+          t.penUp();
+          t.forward(dist);
+          t.penDown();
+          break; 
         case '+':
-          t.right(rotateAngle * randomMod);
+          t.right(rotateAngle);
           break;
         case '-':
-          t.left(rotateAngle * randomMod);
+          t.left(rotateAngle);
           break;
         case '[':
           t.push();
-          depth++; // Increment depth after open bracket
           break;
         case ']':
           t.pop();
-          depth--; // Decrement depth after closing bracket
+          break;
+        case '{':
+          // for fractal binary tree
+          t.push();
+          t.left(rotateAngle);
+          break;
+        case '}':
+          // for fractal binary tree
+          t.penUp();
+          t.pop();
+          t.penDown();
+          t.right(rotateAngle);
+          break;
+        case '0':
+          // for fractal binary tree, draw leaf at end
+          t.forward(dist);
+          elipse(t.getX(), t.getY(), 5, 10);
+          break;
+        case '1':
+          t.forward(dist);
           break;
         case 'X':
-          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
-          break;
-        case 'Y':
-          t.forward(dist * (float)Math.pow(0.5, depth)); // Change move distance by depth
+          // do nothing
           break;
         default:
-          // Throw an error if we don't have a draw operation implemented 
           throw new IllegalArgumentException("Missing a drawing operation case for character: " + c.toString());  
        }
     }

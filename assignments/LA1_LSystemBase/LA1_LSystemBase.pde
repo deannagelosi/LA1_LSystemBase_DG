@@ -3,12 +3,13 @@
 // Note: This sketch uses the Turtle library which can be downloaded from
 // https://github.com/leahbuechley/Turtle
 import processing.svg.*;
+import processing.pdf.*
 
 import Turtle.*;
 
 // How many l-system iterations to do before drawing
 // Press 'm' to increase by 1; 'n' to decrease by 1 (min = 0);
-int numIterations = 0; 
+int numIterations = 3; 
 
 // L-system
 LSystem lSys;
@@ -31,7 +32,8 @@ void setup() {
   // lSys = initNew();
   // lSys = initNatural();
   // lSys = initFass();
-  lSys = initProbBranching();
+  // lSys = initProbBranching();
+  lSys = initSierpinskiTriangle();
    
   // Don't loop the draw function
   noLoop();
