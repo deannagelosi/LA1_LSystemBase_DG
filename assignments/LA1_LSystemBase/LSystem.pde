@@ -121,6 +121,12 @@ public class LSystem {
     for (int i = 0; i < currentIteration.length(); i++) {
       Character c = currentIteration.charAt(i); 
       switch (c) {
+        case 'A':
+          t.forward(dist);
+          break;
+        case 'B':
+         t.forward(dist);
+         break;
         case 'F':
           t.forward(dist); 
           break;
@@ -159,7 +165,7 @@ public class LSystem {
         case '0':
           // for fractal binary tree, draw leaf at end
           t.forward(dist);
-          elipse(t.getX(), t.getY(), 5, 10);
+          ellipse(t.getX(), t.getY(), 5, 10);
           break;
         case '1':
           t.forward(dist);

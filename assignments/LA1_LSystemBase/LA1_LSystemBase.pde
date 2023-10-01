@@ -3,7 +3,7 @@
 // Note: This sketch uses the Turtle library which can be downloaded from
 // https://github.com/leahbuechley/Turtle
 import processing.svg.*;
-import processing.pdf.*
+// import processing.pdf.*
 
 import Turtle.*;
 
@@ -33,7 +33,11 @@ void setup() {
   // lSys = initNatural();
   // lSys = initFass();
   // lSys = initProbBranching();
-  lSys = initSierpinskiTriangle();
+  // lSys = initSierpinskiTriangle();
+  // lSys = initSierpinskiArrowhead();
+  // lSys = initKochSnowflake();
+  // lSys = initFractalTree();
+  lSys = initFractalPlant();
    
   // Don't loop the draw function
   noLoop();
